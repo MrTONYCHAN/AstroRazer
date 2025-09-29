@@ -1,43 +1,42 @@
-# Razorpay Clone Blueprint
+# Astro + Firebase Hosting Project
 
 ## Overview
 
-This project is a clone of the Razorpay checkout page, built with Astro, Tailwind CSS, and Stripe. It allows users to see a product, click a "Pay Now" button, and be redirected to a Stripe checkout page.
+This project is a basic Astro application deployed to Firebase Hosting.
 
-## Project Structure & Features
+## Project Setup & Deployment
 
-### Styling
+### Firebase Initialization
 
-*   **Framework:** Tailwind CSS
-*   **Global Styles:** `src/styles/global.css` contains the Tailwind base styles.
-*   **Layout:** The main layout in `src/layouts/Layout.astro` has a dark background (`bg-gray-900`) and white text.
+1.  **Created Firebase Project:** A new Firebase project with the ID `astrorazor-34588940` was created.
+2.  **Set Active Project:** The Firebase CLI was configured to use `astrorazor-34588940` as the active project for this directory.
+3.  **Configured Firebase Hosting:**
+    *   A `.firebaserc` file was created to link the directory to the `astrorazor-34588940` project.
+    *   A `firebase.json` file was created to configure Firebase Hosting.
+        *   The `public` directory was set to `dist`, which is the standard build output directory for Astro projects.
+        *   Files like `firebase.json`, `.git` artifacts, and `node_modules` are ignored during deployment.
 
-### Components
+### Build & Deployment
 
-*   **`Header.astro`:** A simple header with the application title and a link to the home page.
-*   **`ProductCard.astro`:** A card component that displays a product with an image, name, description, price, and a "Pay Now" button. The "Pay Now" button is a form that submits a POST request to `/api/create-checkout-session`.
+1.  **Installed Dependencies:** `npm install` was run to install the necessary Node.js packages.
+2.  **Built Project:** `npm run build` was executed to build the Astro application. This generated the static files in the `dist/` directory.
+3.  **Deployed to Firebase Hosting:** `firebase deploy` was used to upload the contents of the `dist/` directory to Firebase Hosting.
 
-### Pages
+### Deployment Details
 
-*   **`index.astro`:** The main page of the application, which displays the `Header` and `ProductCard` components.
-*   **`success.astro`:** The page the user is redirected to after a successful payment.
-*   **`cancel.astro`:** The page the user is redirected to after a canceled payment.
-*   **`/api/create-checkout-session.ts`:** An API endpoint that creates a Stripe checkout session and redirects the user to the Stripe checkout page.
+*   **Project Console:** https://console.firebase.google.com/project/astrorazor-34588940/overview
+*   **Hosting URL:** https://astrorazor-34588940.web.app
 
-### Environment Variables
+## Current Task: Firebase Project Initialization and Deployment
 
-The project uses the following environment variables, which are stored in the `.env` file:
+The following steps were completed to set up and deploy the project to Firebase Hosting:
 
-*   `STRIPE_SECRET_KEY`: Your Stripe secret key.
-*   `ASTRO_URL`: The URL of your application (e.g., `http://localhost:4321`).
+1.  Created a new Firebase project: `astrorazor-34588940`.
+2.  Set `astrorazor-34588940` as the active project.
+3.  Created `.firebaserc` to link the project.
+4.  Created `firebase.json` to configure hosting from the `dist` directory.
+5.  Ran `npm install` to install dependencies.
+6.  Ran `npm run build` to build the Astro project.
+7.  Ran `firebase deploy` to deploy the site.
 
-## Current Task: Initial Setup
-
-This is the initial setup of the project. The following steps have been completed:
-
-1.  Installed dependencies: `astro`, `@astrojs/tailwind`, `tailwindcss`, and `stripe`.
-2.  Configured Tailwind CSS.
-3.  Created the `Header`, `ProductCard`, and layout components.
-4.  Created the `index`, `success`, and `cancel` pages.
-5.  Created the Stripe checkout session API endpoint.
-6.  Created the `.env` file with placeholder values.
+The incorrect `blueprint.md` from a previous project was also identified and has been replaced with this correct documentation.
