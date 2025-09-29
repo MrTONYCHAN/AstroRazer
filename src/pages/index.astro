@@ -1,11 +1,14 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Header from '../components/Header.astro';
+import ProductCard from '../components/ProductCard.astro';
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Razorpay Clone">
+  <Header />
+  <main class="container mx-auto px-6 py-12">
+    <div class="flex justify-center">
+      <ProductCard />
+    </div>
+  </main>
 </Layout>

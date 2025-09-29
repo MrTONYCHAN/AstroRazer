@@ -1,0 +1,18 @@
+---
+---
+
+<div class="bg-white rounded-lg shadow-lg overflow-hidden">
+  <img src="https://via.placeholder.com/400x200" alt="Product Image" class="w-full">
+  <div class="p-6">
+    <h2 class="text-2xl font-bold text-gray-800 mb-2">Awesome Product</h2>
+    <p class="text-gray-600 mb-4">The best product you can buy. It's so awesome, you'll want to buy two!</p>
+    <div class="flex items-center justify-between">
+      <span class="text-3xl font-bold text-gray-800">$99</span>
+      <form action="/api/create-checkout-session" method="POST">
+        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300">
+          Pay Now
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
