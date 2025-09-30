@@ -1,15 +1,10 @@
 {
   "hosting": {
-    "public": "dist/client",
-    "rewrites": [
-      {
-        "source": "**",
-        "function": "server"
-      }
+    "public": "dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
     ]
-  },
-  "functions": {
-    "source": "dist/server",
-    "runtime": "nodejs18"
   }
 }

@@ -5,6 +5,10 @@ import UpiPayment from '../../components/UpiPayment.astro';
 import WalletPayment from '../../components/WalletPayment.astro';
 import NetbankingPayment from '../../components/NetbankingPayment.astro';
 
+export function getStaticPaths() {
+  return [];
+}
+
 const { orderId } = Astro.params;
 ---
 
