@@ -1,0 +1,84 @@
+---
+// src/components/payment-methods/CardPayment.astro
+---
+
+<div class="bg-gray-900/50 rounded-lg p-6 border border-white/10">
+    <h3 class="text-lg font-bold mb-4">Credit or Debit Card</h3>
+
+    <form id="card-payment-form">
+        <div class="space-y-4">
+            <div>
+                <label for="card-number" class="block text-sm font-medium text-gray-400 mb-1">Card Number</label>
+                <input type="text" id="card-number" placeholder="**** **** **** ****" class="w-full bg-gray-800 border-gray-700 rounded-md p-2 text-white focus:ring-2 focus:ring-purple-500" required>
+            </div>
+
+            <div class="flex space-x-4">
+                <div class="w-1/2">
+                    <label for="expiry-date" class="block text-sm font-medium text-gray-400 mb-1">Expiry Date</label>
+                    <input type="text" id="expiry-date" placeholder="MM/YY" class="w-full bg-gray-800 border-gray-700 rounded-md p-2 text-white focus:ring-2 focus:ring-purple-500" required>
+                </div>
+                <div class="w-1/2">
+                    <label for="cvv" class="block text-sm font-medium text-gray-400 mb-1">CVV</label>
+                    <input type="text" id="cvv" placeholder="***" class="w-full bg-gray-800 border-gray-700 rounded-md p-2 text-white focus:ring-2 focus:ring-purple-500" required>
+                </div>
+            </div>
+
+            <div>
+                <label for="card-holder" class="block text-sm font-medium text-gray-400 mb-1">Card Holder</label>
+                <input type="text" id="card-holder" placeholder="Full Name" class="w-full bg-gray-800 border-gray-700 rounded-md p-2 text-white focus:ring-2 focus:ring-purple-500" required>
+            </div>
+        </div>
+
+        <button id="pay-now-btn" type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-4 rounded-lg text-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg shadow-purple-500/20 mt-6 flex items-center justify-center">
+            <span id="btn-text">Pay Now</span>
+            <svg id="loading-spinner" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+        </button>
+    </form>
+</div>
+
+<script>
+    const payNowBtn = document.getElementById('pay-now-btn');
+    const btnText = document.getElementById('btn-text');
+    const loadingSpinner = document.getElementById('loading-spinner');
+
+    document.getElementById('card-payment-form')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        payNowBtn.disabled = true;
+        btnText.textContent = 'Processing...';
+        loadingSpinner.classList.remove('hidden');
+
+        const url = new URL(window.location.href);
+        const orderId = url.pathname.split('/').pop();
+
+        try {
+            const response = await fetch('/api/checkout/pay', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    orderId: orderId,
+                    paymentMethod: 'card' 
+                })
+            });
+
+            if (response.ok) {
+                window.location.href = `/success?orderId=${orderId}`;
+            } else {
+                const { message } = await response.json();
+                alert(`Payment failed: ${message}`);
+            }
+        } catch (error) {
+            console.error('Payment error:', error);
+            alert('An unexpected error occurred. Please try again.');
+        } finally {
+            payNowBtn.disabled = false;
+            btnText.textContent = 'Pay Now';
+            loadingSpinner.classList.add('hidden');
+        }
+    });
+</script>

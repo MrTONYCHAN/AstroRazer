@@ -1,0 +1,38 @@
+---
+import CardPayment from './CardPayment.astro';
+import UpiPayment from './UpiPayment.astro';
+import WalletPayment from './WalletPayment.astro';
+import NetbankingPayment from './NetbankingPayment.astro';
+
+const { orderId } = Astro.props;
+--- 
+
+<div class="bg-gray-800/80 rounded-2xl shadow-xl p-6 backdrop-blur-lg border border-white/10">
+  <div x-data="{ tab: 'card' }">
+    <div class="flex border-b border-gray-700 mb-6">
+      <button @click="tab = 'card'" :class="{ 'bg-purple-600/20 text-purple-400': tab === 'card' }" class="flex-1 py-3 text-center font-semibold rounded-t-lg transition-colors">
+        Card
+      </button>
+      <button @click="tab = 'upi'" :class="{ 'bg-purple-600/20 text-purple-400': tab === 'upi' }" class="flex-1 py-3 text-center font-semibold rounded-t-lg transition-colors">
+        UPI
+      </button>
+      <button @click="tab = 'wallet'" :class="{ 'bg-purple-600/20 text-purple-400': tab === 'wallet' }" class="flex-1 py-3 text-center font-semibold rounded-t-lg transition-colors">
+        Wallet
+      </button>
+      <button @click="tab = 'netbanking'" :class="{ 'bg-purple-600/20 text-purple-400': tab === 'netbanking' }" class="flex-1 py-3 text-center font-semibold rounded-t-lg transition-colors">
+        Netbanking
+      </button>
+    </div>
+
+    <div x-show="tab === 'card'"><CardPayment orderId={orderId} /></div>
+    <div x-show="tab === 'upi'"><UpiPayment orderId={orderId} /></div>
+    <div x-show="tab === 'wallet'"><WalletPayment orderId={orderId} /></div>
+    <div x-show="tab === 'netbanking'"><NetbankingPayment orderId={orderId} /></div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('alpine:init', () => {
+    // Alpine.js is already initialized
+  });
+</script>

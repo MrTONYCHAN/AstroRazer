@@ -1,0 +1,35 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const { orderId } = Astro.params;
+
+if (!orderId) {
+  return Astro.redirect('/');
+}
+--- 
+
+<Layout title="Payment Successful - AstroRazer" currentStep="success">
+  <main class="container mx-auto px-6 py-12 text-white">
+    <div class="max-w-2xl mx-auto">
+      <div class="mt-8 bg-gray-800/80 rounded-2xl shadow-xl p-8 backdrop-blur-lg border border-white/10 text-center">
+        <div class="w-24 h-24 mx-auto bg-green-500/20 rounded-full flex items-center justify-center border-2 border-green-500">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h1 class="text-4xl font-bold text-white mt-6">Payment Successful!</h1>
+        <p class="text-gray-400 mt-2">Thank you for your purchase.</p>
+
+        <div class="mt-8 text-left bg-gray-900/50 p-6 rounded-lg">
+            <p class="text-gray-300">Your Order ID is:</p>
+            <p class="text-purple-400 font-mono text-xl break-all">{orderId}</p>
+            <p class="text-gray-500 text-sm mt-4">A confirmation has been sent to your email address.</p>
+        </div>
+
+        <a href="/" class="mt-10 inline-block w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg shadow-purple-500/20">
+            Back to Home
+        </a>
+      </div>
+    </div>
+  </main>
+</Layout>

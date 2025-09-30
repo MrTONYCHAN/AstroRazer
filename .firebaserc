@@ -1,5 +1,7 @@
 {
   "projects": {
     "default": "astrorazor-34588940"
-  }
+  },
+  "targets": {},
+  "etags": {}
 }

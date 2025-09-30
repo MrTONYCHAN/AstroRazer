@@ -1,14 +1,58 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import ProductCard from '../components/ProductCard.astro';
+import Card from '../components/Card.astro';
+import ProgressTracker from '../components/ProgressTracker.astro';
+
+const orderId = `order-${Date.now()}`;
 ---
 
-<Layout title="Razorpay Clone">
-  <Header />
-  <main class="container mx-auto px-6 py-12">
-    <div class="flex justify-center">
-      <ProductCard />
+<Layout title="Welcome to Astro">
+  <main class="space-y-12">
+    <div class="container mx-auto px-6 py-12 text-center">
+      <h1 class="text-5xl font-bold text-white mb-4">E-Commerce Checkout</h1>
+      <p class="text-xl text-gray-400">A seamless and secure checkout experience.</p>
+    </div>
+
+    <div class="container mx-auto px-6">
+      <div class="max-w-4xl mx-auto">
+        <ProgressTracker currentStep="cart" />
+        <div class="mt-8 bg-gray-800/50 backdrop-blur-lg rounded-2xl shadow-xl p-8 border border-white/10">
+          <h2 class="text-3xl font-bold text-white mb-6">Your Cart</h2>
+          <div class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
+              <div class="md:col-span-1">
+                <img src="/placeholder.svg" alt="Product Image" class="rounded-lg w-full h-auto object-cover">
+              </div>
+              <div class="md:col-span-2">
+                <h3 class="text-xl font-semibold text-white">Astro-T-Shirt</h3>
+                <p class="text-gray-400">High-quality, comfortable, and stylish.</p>
+              </div>
+              <div class="md:col-span-1 text-right">
+                <p class="text-lg font-bold text-white">$25.00</p>
+              </div>
+            </div>
+            <div class="border-t border-gray-700 pt-6">
+              <div class="flex justify-between items-center">
+                <p class="text-lg text-gray-400">Subtotal</p>
+                <p class="text-lg font-bold text-white">$25.00</p>
+              </div>
+              <div class="flex justify-between items-center mt-2">
+                <p class="text-lg text-gray-400">Shipping</p>
+                <p class="text-lg font-bold text-white">$5.00</p>
+              </div>
+              <div class="flex justify-between items-center mt-4 border-t border-gray-700 pt-4">
+                <p class="text-2xl font-bold text-white">Total</p>
+                <p class="text-2xl font-bold text-white">$30.00</p>
+              </div>
+            </div>
+            <div class="mt-8 text-right">
+              <a href={`/checkout/${orderId}`} class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg shadow-purple-500/20">
+                Checkout
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 </Layout>

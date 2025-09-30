@@ -1,0 +1,76 @@
+---
+// src/components/payment-methods/UpiPayment.astro
+---
+
+<div class="bg-gray-900/50 rounded-lg p-6 border border-white/10">
+    <h3 class="text-lg font-bold mb-4">UPI (Unified Payments Interface)</h3>
+
+    <div class="flex flex-col items-center">
+        <div class="w-48 h-48 bg-white rounded-lg flex items-center justify-center mb-4">
+            <p class="text-black">[Mock QR Code]</p>
+        </div>
+
+        <p class="text-gray-400 mb-4">Or enter your UPI ID</p>
+
+        <form id="upi-payment-form" class="w-full">
+            <div class="space-y-4">
+                <div>
+                    <label for="upi-id" class="block text-sm font-medium text-gray-400 mb-1">UPI ID</label>
+                    <input type="text" id="upi-id" placeholder="yourname@bank" class="w-full bg-gray-800 border-gray-700 rounded-md p-2 text-white focus:ring-2 focus:ring-purple-500" required>
+                </div>
+            </div>
+
+            <button id="upi-pay-btn" type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-4 rounded-lg text-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg shadow-purple-500/20 mt-6 flex items-center justify-center">
+                <span id="upi-btn-text">Pay with UPI</span>
+                 <svg id="upi-loading-spinner" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const upiPayBtn = document.getElementById('upi-pay-btn');
+    const upiBtnText = document.getElementById('upi-btn-text');
+    const upiLoadingSpinner = document.getElementById('upi-loading-spinner');
+
+    document.getElementById('upi-payment-form')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        upiPayBtn.disabled = true;
+        upiBtnText.textContent = 'Processing...';
+        upiLoadingSpinner.classList.remove('hidden');
+
+        const url = new URL(window.location.href);
+        const orderId = url.pathname.split('/').pop();
+
+        try {
+            const response = await fetch('/api/checkout/pay', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    orderId: orderId,
+                    paymentMethod: 'upi' 
+                })
+            });
+
+            if (response.ok) {
+                window.location.href = `/success?orderId=${orderId}`;
+            } else {
+                const { message } = await response.json();
+                alert(`Payment failed: ${message}`);
+            }
+        } catch (error) {
+            console.error('Payment error:', error);
+            alert('An unexpected error occurred. Please try again.');
+        } finally {
+            upiPayBtn.disabled = false;
+            upiBtnText.textContent = 'Pay with UPI';
+            upiLoadingSpinner.classList.add('hidden');
+        }
+    });
+</script>

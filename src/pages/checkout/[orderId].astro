@@ -1,0 +1,72 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CardPayment from '../../components/CardPayment.astro';
+import UpiPayment from '../../components/UpiPayment.astro';
+import WalletPayment from '../../components/WalletPayment.astro';
+import NetbankingPayment from '../../components/NetbankingPayment.astro';
+
+const { orderId } = Astro.params;
+---
+
+<Layout title="Checkout" currentStep="checkout">
+  <div class="container mx-auto px-6 py-12">
+    <div class="max-w-4xl mx-auto">
+      <div id="payment-selection" class="mt-8 bg-gray-800/50 backdrop-blur-lg rounded-2xl shadow-xl p-8 border border-white/10">
+        <h2 class="text-3xl font-bold text-white mb-6">Choose Payment Method</h2>
+        <div class="flex space-x-4 border-b border-gray-700 mb-6">
+          <button id="card-btn" class="payment-method-btn active">Card</button>
+          <button id="upi-btn" class="payment-method-btn">UPI</button>
+          <button id="wallet-btn" class="payment-method-btn">Wallet</button>
+          <button id="netbanking-btn" class="payment-method-btn">Netbanking</button>
+        </div>
+        <div id="payment-forms">
+          <div id="card-form" class="payment-form">
+            <CardPayment orderId={orderId} />
+          </div>
+          <div id="upi-form" class="payment-form hidden">
+            <UpiPayment orderId={orderId} />
+          </div>
+          <div id="wallet-form" class="payment-form hidden">
+            <WalletPayment orderId={orderId} />
+          </div>
+          <div id="netbanking-form" class="payment-form hidden">
+            <NetbankingPayment orderId={orderId} />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .payment-method-btn {
+    @apply px-4 py-2 font-semibold text-gray-400 border-b-2 border-transparent hover:text-white hover:border-purple-500 transition-all duration-200;
+  }
+  .payment-method-btn.active {
+    @apply text-white border-purple-500;
+  }
+  .payment-form.hidden {
+    display: none;
+  }
+</style>
+
+<script>
+  const paymentMethodBtns = document.querySelectorAll('.payment-method-btn');
+  const paymentForms = document.querySelectorAll('.payment-form');
+
+  paymentMethodBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      paymentMethodBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const targetForm = btn.id.replace('-btn', '-form');
+      paymentForms.forEach(form => {
+        if (form.id === targetForm) {
+          form.classList.remove('hidden');
+        } else {
+          form.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>

@@ -1,0 +1,43 @@
+---
+const { orderId } = Astro.props;
+---
+
+<form id="upi-payment-form">
+  <input type="hidden" name="orderId" value={orderId} />
+  <input type="hidden" name="paymentMethod" value="upi" />
+  <div class="space-y-4">
+    <div>
+      <label for="upiId" class="block text-sm font-medium text-gray-300">UPI ID</label>
+      <input type="text" id="upiId" name="upiId" class="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm" placeholder="yourname@bank" required>
+    </div>
+  </div>
+  <div class="mt-8">
+    <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-4 rounded-lg text-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-lg shadow-purple-500/20">
+      Pay Now
+    </button>
+  </div>
+</form>
+
+<script>
+  document.getElementById('upi-payment-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData.entries());
+
+    const response = await fetch('/api/checkout/pay', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      const responseData = await response.json();
+      window.location.href = `/success/${responseData.orderId}`;
+    } else {
+      // Handle errors
+      console.error('Payment failed');
+    }
+  });
+</script>
