@@ -1,6 +1,5 @@
 ---
-const { title, currentStep } = Astro.props;
-import ProgressTracker from '../components/ProgressTracker.astro';
+const { title } = Astro.props;
 ---
 <!doctype html>
 <html lang="en">
@@ -14,11 +13,6 @@ import ProgressTracker from '../components/ProgressTracker.astro';
 	<body class="bg-gray-900 text-white flex flex-col min-h-screen">
 
 		<main class="flex-grow">
-            { (currentStep === 'checkout' || currentStep === 'success') &&
-                <div class="container mx-auto px-6 py-12">
-                    <ProgressTracker currentStep={currentStep} />
-                </div>
-            }
 			<slot />
 		</main>
 
@@ -32,6 +26,11 @@ import ProgressTracker from '../components/ProgressTracker.astro';
 	</body>
 </html>
 
+<style is:global>
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+</style>
 <style>
 	html,
 	body {

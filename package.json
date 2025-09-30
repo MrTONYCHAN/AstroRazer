@@ -10,8 +10,9 @@
   },
   "dependencies": {
     "@astrojs/db": "^0.18.0",
+    "@astrojs/node": "^8.3.4",
     "@astrojs/react": "^4.4.0",
-    "@astrojs/tailwind": "^5.1.0",
+    "@astrojs/tailwind": "^5.1.5",
     "@types/uuid": "^10.0.0",
     "alpinejs": "^3.15.0",
     "astro": "^4.5.12",

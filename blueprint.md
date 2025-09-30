@@ -1,40 +1,29 @@
-# AstroRazer Checkout Flow
+
+# Project Blueprint
 
 ## Overview
 
-This project is a modern, multi-step checkout experience built with Astro.js. It allows users to initiate a payment, select a payment method, and receive a confirmation of their order. The application is designed to be fast, secure, and user-friendly, leveraging the best of Astro's server-first architecture and the interactivity of client-side JavaScript where needed.
+This project is a static-first web application built with Astro.js. It is designed to be developed within the Firebase Studio (formerly Project IDX) environment. The focus is on creating a fast, highly-performant, and scalable site that delivers minimal JavaScript by default, ensuring an exceptional user experience and top-tier Core Web Vitals.
 
-## Features & Design
+## Implemented Features
 
-*   **Simulated Checkout:** The entire checkout process is now simulated. No actual database is used.
-*   **Dark Theme:** The application features a consistent dark, modern, and visually appealing theme.
-    *   **Color Palette:** Dark grays (`gray-800`, `gray-900`) for backgrounds, white and light grays for text, and a vibrant purple for interactive elements and accents.
-    *   **Effects:** `backdrop-blur` and semi-transparent backgrounds (`bg-gray-800/80`) are used to create a "glassmorphism" effect.
-    *   **Interactivity:** Buttons have hover effects, transitions, and shadows to provide clear feedback to the user.
-*   **Step 1: Start Shopping:** A landing page where users can begin the checkout process.
-*   **Step 2: Payment Selection:** A page where users can choose from multiple payment methods.
-*   **Step 3: Payment Confirmation:** A success page that confirms the payment and displays the order details.
-*   **Progress Tracker:** A visual indicator that shows the user their current step in the checkout process.
+### Styling and Layout
 
-## Project Structure
+- **CSS Framework:** Tailwind CSS is used for styling.
+- **Layout:** A single layout file, `src/layouts/Layout.astro`, defines the basic structure of all pages.
+- **Global Styles:** Global styles, including Tailwind's base styles, components, and utilities, are defined in `src/layouts/Layout.astro`.
 
-*   `src/pages/index.astro`: The initial landing page.
-*   `src/pages/checkout/[orderId].astro`: The payment selection page.
-*   `src/pages/success/[orderId].astro`: The payment confirmation page.
-*   `src/pages/api/visits/start.js`: API endpoint to **simulate** creating a new order.
-*   `src/pages/api/checkout/pay.ts`: API endpoint to **simulate** processing the payment.
-*   `src/layouts/Layout.astro`: The main layout for the application, defining the dark theme and overall structure.
-*   `src/components/OrderSummary.astro`: A component to display the (simulated) order summary.
-*   `src/components/CardPayment.astro`: Component for card payment.
-*   `src/components/UpiPayment.astro`: Component for UPI payment.
-*   `src/components/WalletPayment.astro`: Component for wallet payment.
-*   `src/components/NetbankingPayment.astro`: Component for netbanking payment.
-*   `src/components/ProgressTracker.astro`: The component that displays the checkout progress.
+### Pages
 
-## Current Task: Refactor Checkout Flow
+- **Home Page:** `src/pages/index.astro` is the main entry point of the application.
+- **API Routes:** The project includes two API routes, `src/pages/api/auth/register.ts` and `src/pages/api/auth/login.ts`.
 
-*   **Dynamic Routing:** The `checkout` and `success` pages have been moved to dynamic routes (`checkout/[orderId].astro` and `success/[orderId].astro`) to handle the `orderId` directly in the URL.
-*   **Fixed Redirection:** The client-side scripts in all payment components have been updated to redirect to the new dynamic success page URL, ensuring the `orderId` is correctly passed.
-*   **Centralized Progress Tracker:** The `ProgressTracker` component has been integrated into the main `Layout.astro` file, and the redundant trackers have been removed from the individual pages. The layout now conditionally renders the tracker based on the `currentStep` prop.
-*   **Consolidated Payment Logic:** All payment components (`CardPayment.astro`, `UpiPayment.astro`, `WalletPayment.astro`, `NetbankingPayment.astro`) are now correctly rendered and managed within `checkout/[orderId].astro`.
-*   **Bug Fixes:** Corrected invalid import paths and ensured the application is stable.
+## Current Task: Fix Styling Issue
+
+### Plan
+
+1.  **DONE** Install the `@astrojs/tailwind` dependency.
+2.  **DONE** Configure the `astro.config.mjs` file to use the `@astrojs/tailwind` integration.
+3.  **DONE** Create a `blueprint.md` file to document the project.
+4.  **UP NEXT** Remove the temporary test files (`src/layouts/TestLayout.astro` and `src/pages/test.astro`).
+5.  Run the build and verify that the client-side assets are generated correctly.

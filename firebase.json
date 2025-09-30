@@ -1,16 +1,15 @@
 {
   "hosting": {
-    "public": "dist",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
+    "public": "dist/client",
+    "rewrites": [
+      {
+        "source": "**",
+        "function": "server"
+      }
     ]
   },
-  "firestore": {
-    "database": "(default)",
-    "location": "nam5",
-    "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
+  "functions": {
+    "source": "dist/server",
+    "runtime": "nodejs18"
   }
 }
